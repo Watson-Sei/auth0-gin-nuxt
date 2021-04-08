@@ -31,15 +31,40 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/dotenv'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
     'bootstrap-vue/nuxt',
+    '@nuxtjs/axios',
+    '@nuxtjs/auth',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  axios: {},
+
+  auth: {
+    redirect: {
+      login: '/login',
+      callback: '/callback',
+      logout: '/login',
+      home: '/',
+    },
+    strategies: {
+      auth0: {
+        domain: process.env.AUTHENTICATION_AUTH0_DOMAIN,
+        client_id: process.env.AUTHENTICATION_AUTH0_CLIENT_ID,
+        audience: process.env.AUTHENTICATION_AUTH0_AUDIENCE,
+      },
+    }
+  },
+
+  router: {
+    middleware: ['auth']
   }
 }
