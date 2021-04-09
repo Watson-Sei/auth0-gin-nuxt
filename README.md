@@ -1,6 +1,12 @@
 # auth0-gin-nuxt
 Auth0 + Gin(golang) + Nuxt.js(JavaScript)
 
+- [Authentication in Golang with JWTs](https://auth0.com/blog/authentication-in-golang/)
+
+- [Invalid audience with Go API backend (Frontend: React SPA)](https://community.auth0.com/t/invalid-audience-with-go-api-backend-frontend-react-spa/60267/2)
+
+- [gin-contrib/cors](https://github.com/gin-contrib/cors)
+
 ## クイックスタート
 
 フロント側とバック側の環境変数ファイルに設定する。
