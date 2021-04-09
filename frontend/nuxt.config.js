@@ -46,7 +46,9 @@ export default {
   build: {
   },
 
-  axios: {},
+  axios: {
+    baseURL: 'http://localhost:8080'
+  },
 
   auth: {
     redirect: {

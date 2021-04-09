@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <button v-if="!this.$auth.$state.loggedIn" @click="login">Log in</button>
+    <div class="jumbotron text-center mt-5">
+      <h1>Auth0 + Gin + Nuxt.js</h1>
+      <button v-if="!this.$auth.$state.loggedIn" @click="login" class="btn btn-primary btn-lg btn-login btn-block">Log in</button>
+    </div>
   </div>
 </template>
 

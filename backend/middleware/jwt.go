@@ -33,9 +33,27 @@ var jwtMiddleware = jwtmiddleware.New(jwtmiddleware.Options{
 	ValidationKeyGetter: func(token *jwt.Token) (interface{}, error) {
 		// Verify 'aud' claim
 		aud := os.Getenv("AUTH0_IDENTIFIER")
-		checkAud := token.Claims.(jwt.MapClaims).VerifyAudience(aud, false)
-		if !checkAud {
-			return token, errors.New("Invalid audience.")
+		// 複数のオーディエンスの場合、JWTトークンのオーディエンスを[] interface {}に変換します
+		convAud, ok := token.Claims.(jwt.MapClaims)["aud"].([]interface{})
+		if !ok {
+			// オーディエンスが1つしかない場合は、JWTトークンのオーディエンスを文字列に変換します
+			strAud, ok := token.Claims.(jwt.MapClaims)["aud"].(string)
+			// 文字列に変換できない場合はエラーを返します
+			if !ok {
+				return token, errors.New("Invalid audience.")
+			}
+			// オーディエンスが一致しない場合はエラーを返します
+			if strAud != aud {
+				return token, errors.New("Invalid audience.")
+			}
+		} else {
+			for _, v := range convAud {
+				if v == aud {
+					break
+				} else {
+					return token, errors.New("Invalid audience.")
+				}
+			}
 		}
 		// Verify 'iss' claim
 		iss := "https://" + os.Getenv("AUTH0_DOMAIN") + "/"
